@@ -45,39 +45,39 @@ export function distributeBalancedTeams(
   }
 
   // Swap optimization to fine-tune balancing
-  function trySwap(): boolean {
-    let improved = false;
-    for (let i = 0; i < numTeams; i++) {
-      for (let j = i + 1; j < numTeams; j++) {
-        for (let p1 = 0; p1 < teams[i].players.length; p1++) {
-          for (let p2 = 0; p2 < teams[j].players.length; p2++) {
-            let player1 = teams[i].players[p1];
-            let player2 = teams[j].players[p2];
+  // function trySwap(): boolean {
+  //   let improved = false;
+  //   for (let i = 0; i < numTeams; i++) {
+  //     for (let j = i + 1; j < numTeams; j++) {
+  //       for (let p1 = 0; p1 < teams[i].players.length; p1++) {
+  //         for (let p2 = 0; p2 < teams[j].players.length; p2++) {
+  //           let player1 = teams[i].players[p1];
+  //           let player2 = teams[j].players[p2];
 
-            let newTotalI = teams[i].total - player1.rating + player2.rating;
-            let newTotalJ = teams[j].total - player2.rating + player1.rating;
+  //           let newTotalI = teams[i].total - player1.rating + player2.rating;
+  //           let newTotalJ = teams[j].total - player2.rating + player1.rating;
 
-            let beforeDiff = Math.abs(teams[i].total - teams[j].total);
-            let afterDiff = Math.abs(newTotalI - newTotalJ);
+  //           let beforeDiff = Math.abs(teams[i].total - teams[j].total);
+  //           let afterDiff = Math.abs(newTotalI - newTotalJ);
 
-            if (afterDiff < beforeDiff) {
-              // Swap players
-              teams[i].players[p1] = player2;
-              teams[j].players[p2] = player1;
+  //           if (afterDiff < beforeDiff) {
+  //             // Swap players
+  //             teams[i].players[p1] = player2;
+  //             teams[j].players[p2] = player1;
 
-              teams[i].total = newTotalI;
-              teams[j].total = newTotalJ;
-              improved = true;
-            }
-          }
-        }
-      }
-    }
-    return improved;
-  }
+  //             teams[i].total = newTotalI;
+  //             teams[j].total = newTotalJ;
+  //             improved = true;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return improved;
+  // }
 
   // Keep optimizing swaps until no further improvement
-  while (trySwap());
+  // while (trySwap());
 
   return teams;
 }
