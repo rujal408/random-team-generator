@@ -6,26 +6,35 @@ import React, { useState } from "react";
 
 const GeneratedTeam = () => {
   const [team, setTeams] = useState<any[]>([]);
+  const [errors, setErrors] = useState("");
   const { data: players } = useGetPlayers();
   const { data: teams } = useGetTeam();
 
   const generateTeam = async () => {
     if (teams && players) {
-      const balancedTeam = distributeBalancedTeams(players, teams.length);
-      console.log(balancedTeam);
-      setTeams(balancedTeam);
+      setErrors("");
+      try {
+        const balancedTeam = distributeBalancedTeams(players, teams.length);
+        setTeams(balancedTeam);
+      } catch (e) {
+        const a = "" + e;
+        setErrors(a);
+      }
     }
   };
 
   return (
     <div className="p-4">
       {teams && teams.length > 0 && team.length === 0 && (
-        <button
-          onClick={generateTeam}
-          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          Generate
-        </button>
+        <>
+          <button
+            onClick={generateTeam}
+            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          >
+            Generate
+          </button>
+          <span>{errors}</span>
+        </>
       )}
       {team.length > 0 && (
         <div className="flex flex-col gap-6">
